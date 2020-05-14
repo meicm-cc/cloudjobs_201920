@@ -14,8 +14,11 @@ const PORT = process.env.PORT || 10000;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 const start = async () => {
+  console.log("Starting Node Server")
   const app = express();
+  console.log("MongoDB setup")
   const db = await mongo.connect();
+  console.log("Agenda setup")
   agenda.start(db);
 
   passport.use(new passportLocal((username,password, done)=> {
@@ -103,5 +106,6 @@ const start = async () => {
 
   app.listen(PORT,()=> console.log(`Cloud Jobs API listening on port ${PORT}`));
 }
+
 start();
 
