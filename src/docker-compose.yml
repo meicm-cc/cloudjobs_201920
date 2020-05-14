@@ -16,8 +16,6 @@ services:
     depends_on: 
       - "cloudjobs_database"
     environment:
-      - IT_JOBS_ITJOBS_KEY=<key>
+      - ITJOBS_KEY=<key>
       - IT_JOBS_URL=http://api.itjobs.pt
       - DB_HOST=cloudjobs_database
-
-# docker-compose up --build
