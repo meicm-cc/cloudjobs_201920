@@ -1,3 +1,5 @@
+const backendURL = 'http://localhost:8080'
+
 const insertSearchResult = (job,tbody) => {
   let row = document.createElement('tr');
   let publishedAt = document.createElement('td');
@@ -67,8 +69,8 @@ const createPagination = (meta) => {
 
 const queryAPI = (search,local=false, page=1, limit=10) => {
   return new Promise((resolve, reject)=>{
-    url = 'http://localhost:8080/api/search';
-    if(local) url = 'http://localhost:8080/api/local';
+    url = backendURL+'/api/search';
+    if(local) url = backendURL+'/api/local';
     const parameters = {
       search: search,
       page: page,
@@ -130,7 +132,7 @@ const newKeywordListener = (e) => {
     return location.href='login.html';
   }
   let keyword = document.querySelector("#new-keyword input[type='text']").value;
-  axios.post('http://localhost:8080/api/keywords',{data:keyword})
+  axios.post(backendURL+'/api/keywords',{data:keyword})
     .then(response=>{
     getExistingKeywords();
   }).catch(error=>{console.log(error);});
@@ -143,7 +145,7 @@ const getExistingKeywords = () => {
   } else {
     return location.href='login.html';
   }
-  axios.get('http://localhost:8080/api/keywords').
+  axios.get(backendURL+'/api/keywords').
     then( response =>  {
       const table = document.querySelector("#keyword-table");
       const tbody = table.querySelector("tbody");
