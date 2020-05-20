@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudjobs-application
+  labels:
+    name: cloudjobs-application
+    project: meicm-bm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cloudjobs-application
+  template:
+    metadata:
+      labels:
+        name: cloudjobs-application
+        project: meicm-bm
+    spec:
+      containers:
+      - image: cloudjobs_app:1.0.0
+        name: cloudjobs-application
+        imagePullPolicy: Never
+        resources: {}
+        ports:
+        - containerPort: 80
+        env:
+        - name: ITJOBS_KEY
+          value: 01ad8778ca89c4e7fc31549279a7630d
+        - name: ITJOBS_URL
+          value: http://api.itjobs.pt
+        - name: SERVICE_DB_HOSTNAME
+          value: cloudjobs-database
+        - name: SERVICE_DB_NAME
+          value: cloudjobs
+        - name: SERVICE_DB_PORT
+          value: "27017"
+        - name: SERVICE_PORT
+          value: "10000"
+      restartPolicy: Always

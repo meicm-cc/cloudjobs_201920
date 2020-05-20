@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudjobs-database
+  labels:
+    project: meicm-bm
+    name: cloudjobs-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cloudjobs-database
+  template:
+    metadata:
+      labels:
+        name: cloudjobs-database
+        project: meicm-bm
+    spec:
+      containers:
+      - name: cloudjobs-mongo
+        image: mongo
+        imagePullPolicy: Always
+        resources: {}
+      restartPolicy: Always

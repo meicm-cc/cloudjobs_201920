@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cloudjobs-application
+  labels:
+    name: cloudjobs-application
+spec:
+  selector:
+    name:  cloudjobs-application
+  type: NodePort
+  ports:
+  - port:  10000
+    targetPort:  10000
