@@ -3,3 +3,6 @@
 .vagrant
 **/backup
 **/vault.yml
+
+**/.terraform*
+**/*.tfstate.backup
