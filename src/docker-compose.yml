@@ -4,18 +4,16 @@ services:
   cloudjobs_database:
     image: mongo
   cloudjobs_application:
-    image: cloudjobs_app
+    image: cloudjobs_app:1.0.0
     build:
       context: ./
       dockerfile: Dockerfile
-    volumes:
-      - ./backend:/var/app/backend
-      - ./frontend:/var/app/frontend
     ports:
-      - "8080:10000"
+      - "10000:10000"
     depends_on: 
       - "cloudjobs_database"
     environment:
-      - ITJOBS_KEY=<key>
-      - IT_JOBS_URL=http://api.itjobs.pt
-      - DB_HOST=cloudjobs_database
+      - ITJOBS_KEY=01ad8778ca89c4e7fc31549279a7630d
+      - ITJOBS_URL=http://api.itjobs.pt
+      - SERVICE_DB_HOSTNAME=cloudjobs_database
+      - SERVICE_DB_PORT=27017

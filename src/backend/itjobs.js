@@ -73,7 +73,7 @@ exports.getAllJobs = () => {
 
 exports.searchITJobs = (search, limit, page) => {
   return new Promise((resolve, reject) => {
-    const url = `${ITJOBS_URL}/job/search.json`;
+    const url = `${ITJOBS_URL}/job/search.json?api_key=${ITJOBS_KEY}&q=${search}`;
 
     const requestOptions = {
       url: url,
@@ -90,6 +90,7 @@ exports.searchITJobs = (search, limit, page) => {
     axios(requestOptions.url, requestOptions)
       .then(async (response) => {
         console.log(`DATA received ${typeof response.data}`);
+        //console.log(response.data);
         const parsedData = await parseSearchResults(response.data.results);
         const returnData = {
           meta: {

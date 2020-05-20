@@ -1,4 +1,4 @@
-const backendURL = 'http://localhost:8080'
+let backendURL = ''
 
 const insertSearchResult = (job,tbody) => {
   let row = document.createElement('tr');
@@ -162,7 +162,7 @@ const getExistingKeywords = () => {
           e.preventDefault();
           let line = e.target.parentNode.parentNode;
           let keyword = e.target.getAttribute('data-keyword');
-          axios.delete('/api/keywords/'+keyword)
+          axios.delete(backendURL+'/api/keywords/'+keyword)
           .then(response=>{
             line.parentNode.removeChild(line);
           }).catch(error=>{console.log(error);});
@@ -182,7 +182,7 @@ const loginListener = (e) => {
     username: document.querySelector('#username').value,
     password: document.querySelector('#password').value
   }
-  axios.post('http://localhost:8080/api/signin',data)
+  axios.post(backendURL+'/api/signin',data)
     .then(response=>{
       sessionStorage.setItem('token',response.data.token);
       location.reload(false);

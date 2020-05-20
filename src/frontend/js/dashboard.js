@@ -1,3 +1,5 @@
+let backendURL = ''
+
 const processKeywords = (data) => {
   const processed = {
     keywords: Object.keys(data),
@@ -35,8 +37,8 @@ const processTimeData = (data) => {
 
 ( async ()=>{
   
-  const latestStatistic = (await axios.get('http://localhost:8080/api/statistics/latest')).data;
-  const statistics = (await axios.get('http://localhost:8080/api/statistics')).data;
+  const latestStatistic = (await axios.get(backendURL+'/api/statistics/latest')).data;
+  const statistics = (await axios.get(backendURL+'/api/statistics')).data;
   document.querySelector('.jobs div').innerHTML = latestStatistic.totalJobs;
   document.querySelector('.growth :nth-child(2) span').innerHTML = (latestStatistic.deltas.day*100).toFixed(2);
   document.querySelector('.growth :nth-child(3) span').innerHTML = (latestStatistic.deltas.week*100).toFixed(2);

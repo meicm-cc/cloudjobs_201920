@@ -2,13 +2,11 @@ const Agenda = require('agenda');
 const db = require('./database.js');
 const itJobs = require('./itjobs.js');
 
-const dbHost = process.env.DB_HOST || '127.0.0.1';
-const dbPort = process.env.BD_PORT || 27017;
-const dbName = process.env.DB_NAME || 'cloudjobs';
-const authMechanism = 'DEFAULT';
+const SERVICE_DB_HOSTNAME = encodeURIComponent(process.env.SERVICE_DB_HOSTNAME || 'localhost')
+const SERVICE_DB_PORT = encodeURIComponent(process.env.SERVICE_DB_PORT || 27017)
+const SERVICE_DB_NAME = process.env.SERVICE_DB_NAME || 'cloudjobs'
 
-// Connection URL
-const url = `mongodb://${dbHost}:${dbPort}/${dbName}`;
+const url = `mongodb://${SERVICE_DB_HOSTNAME}:${SERVICE_DB_PORT}/${SERVICE_DB_NAME}`;
 
 const start = async (mongo) => {
   const agenda = new Agenda({db: {address: url, collection: 'agendaJobs'},options: { useNewUrlParser: true }});

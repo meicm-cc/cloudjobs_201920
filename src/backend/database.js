@@ -1,18 +1,17 @@
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcryptjs');
-const dbHost = process.env.DB_HOST || '127.0.0.1';
-const dbPort = process.env.BD_PORT || 27017;
-const dbName = process.env.DB_NAME || 'cloudjobs';
-const authMechanism = 'DEFAULT';
+
+const SERVICE_DB_HOSTNAME = process.env.SERVICE_DB_HOSTNAME || 'localhost'
+const SERVICE_DB_PORT = process.env.SERVICE_DB_PORT || 27017
+const SERVICE_DB_NAME = process.env.SERVICE_DB_NAME || 'cloudjobs'
+
+const url = `mongodb://${SERVICE_DB_HOSTNAME}:${SERVICE_DB_PORT}`;
 
 const mongoDBOptions = {
   reconnectInterval: 1000,
   reconnectTries: 60,
   autoReconnect: true
 }
-
-// Connection URL
-const url = `mongodb://${dbHost}:${dbPort}/${dbName}`;
 
 const APP_USER_PASS = process.env.APP_USER_PASS || 'password';
 
@@ -107,31 +106,26 @@ const getGathererConfig = (db) => {
   });
 }
 
-
 const connect = () => {
-  let db;
-  let client;
-  console.log(`[MongoDB] connecting to: ${url}`);
-
-  return new Promise((resolve,reject)=>{
-    console.log("Connecting to "+url)
+  return new Promise((resolve, reject) => {
 
     const client = new MongoClient(url,mongoDBOptions)
-    client.connect( async (err) =>  {
-      if(err) {
+
+    client.connect( async (err) => {
+      if (err) {
         return reject(err);
       }
-      console.log("Connected successfully to server");
-      db = client.db(dbName);
+      const db = client.db(SERVICE_DB_NAME);
+      if (!db) {
+        return reject("No database object returned from client")
+      }
 
       await loadDefaults(db);
       await loadDefaultUser(db);
 
-      return resolve({
-        client:client,
-        db:db
-      });
-    });
+      console.log("Connected successfully to server");
+      return resolve({ client: client, db, db });
+    })
   })
 }
 
