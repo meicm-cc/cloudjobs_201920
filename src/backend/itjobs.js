@@ -47,14 +47,13 @@ const makeRequest = (requestOptions) => {
 
 exports.getAllJobs = () => {
   return new Promise(async (resolve, reject) => {
-    const url = `${ITJOBS_URL}/job/search.json`;
+    const url = `${ITJOBS_URL}/job/search.json?api_key=${ITJOBS_KEY}`;
     const requestOptions = {
       url: url,
       method: 'GET',
       json: true,
-      qs: {
+      params: {
         api_key: ITJOBS_KEY,
-        q: '',
         limit: 500,
         page: 1
       }
@@ -79,7 +78,7 @@ exports.searchITJobs = (search, limit, page) => {
       url: url,
       method: 'GET',
       json: true,
-      qs: {
+      params: {
         api_key: ITJOBS_KEY,
         q: search,
         limit: limit,
