@@ -64,7 +64,7 @@ exports.getAllJobs = () => {
       let response = await makeRequest(requestOptions);
       results = results.concat(response.results);
       resultsToGet = response.total - (500 * response.page);
-      requestOptions.qs.page++;
+      requestOptions.page.page++;
     }
     resolve(results);
   });
